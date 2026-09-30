@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>amo você EMI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Pacifico&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rosa: #ff5c8a;
+    --rosa-escuro: #c9305c;
+    --texto: #a14d68;
+    --capyW: min(88vw, 440px, 52vh);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+      radial-gradient(circle at 18% 12%, #fff9fb 0, transparent 42%),
+      radial-gradient(circle at 88% 85%, #ffe2c7 0, transparent 45%),
+      linear-gradient(165deg, #fff0f5, #ffd6e3);
+    font-family: 'Fredoka', system-ui, sans-serif;
+    color: var(--texto);
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  #fundo { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+
+  main {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px;
+  }
+
+  /* ---------- lettering ---------- */
+  .letreiro {
+    width: min(92vw, 600px, 66vh);
+    height: auto;
+    overflow: visible;
+    cursor: pointer;
+    animation: entra .9s cubic-bezier(.2, 1.5, .4, 1) both;
+  }
+  @keyframes entra { from { transform: scale(.5) translateY(30px); opacity: 0; } }
+  .script { font-family: 'Pacifico', cursive; }
+  .emi-txt { font-family: 'Fredoka', sans-serif; font-weight: 700; letter-spacing: 8px; }
+  #emi { transform-box: fill-box; transform-origin: center; }
+  #emi.balanca { animation: balanca .7s ease; }
+  @keyframes balanca {
+    20% { transform: rotate(-6deg) scale(1.08); }
+    45% { transform: rotate(5deg) scale(1.04); }
+    70% { transform: rotate(-2deg); }
+  }
+  .bate { transform-box: fill-box; transform-origin: center; animation: bate 1.1s ease-in-out infinite; }
+  .bate.atraso { animation-delay: .25s; }
+  @keyframes bate {
+    0%, 100% { transform: scale(1); }
+    15% { transform: scale(1.25); }
+    30% { transform: scale(1); }
+    45% { transform: scale(1.15); }
+  }
+  .brilho-estrela { transform-box: fill-box; transform-origin: center; animation: pisca-estrela 2.4s ease-in-out infinite; }
+  .brilho-estrela:nth-of-type(2) { animation-delay: .6s; }
+  .brilho-estrela:nth-of-type(3) { animation-delay: 1.2s; }
+  .brilho-estrela:nth-of-type(4) { animation-delay: 1.8s; }
+  @keyframes pisca-estrela {
+    0%, 100% { transform: scale(.4) rotate(0); opacity: .3; }
+    50% { transform: scale(1.1) rotate(45deg); opacity: 1; }
+  }
+
+  /* ---------- capivara ---------- */
+  .capy-wrap {
+    position: relative;
+    width: var(--capyW);
+    margin-top: calc(var(--capyW) * -0.1);
+    touch-action: none;
+  }
+  #capy { display: block; width: 100%; height: auto; overflow: visible; cursor: pointer; }
+
+  #capyBob { animation: sobe 1.1s cubic-bezier(.2, 1.3, .4, 1) .3s both, boia 3.2s ease-in-out 1.4s infinite; }
+  @keyframes sobe { from { transform: translateY(140px); } to { transform: translateY(0); } }
+  @keyframes boia { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
+
+  #capyBoing { transform-box: fill-box; transform-origin: 50% 85%; }
+  #capyBoing.boing { animation: boing .65s cubic-bezier(.3, 1.6, .5, 1); }
+  @keyframes boing {
+    0% { transform: scale(1, 1); }
+    20% { transform: scale(1.08, .9); }
+    45% { transform: scale(.94, 1.08) translateY(-16px); }
+    70% { transform: scale(1.03, .97); }
+    100% { transform: scale(1, 1); }
+  }
+
+  .olho { transform-box: fill-box; transform-origin: center; transition: opacity .15s; }
+  .olho.pisca { animation: pisca .18s ease-in-out; }
+  @keyframes pisca { 50% { transform: scaleY(.1); } }
+  .olho-feliz, .boca-aberta { opacity: 0; transition: opacity .15s; }
+  .feliz .olho, .feliz .boca { opacity: 0; }
+  .feliz .olho-feliz, .feliz .boca-aberta { opacity: 1; }
+  .boca { transition: opacity .15s; }
+
+  .bochecha { opacity: .5; transform-box: fill-box; transform-origin: center; transition: opacity .3s, transform .3s; }
+  .feliz .bochecha { opacity: .95; transform: scale(1.25); }
+
+  .orelha { transform-box: fill-box; transform-origin: 50% 90%; }
+  .feliz .orelha-e { animation: mexe-e .22s ease-in-out infinite alternate; }
+  .feliz .orelha-d { animation: mexe-d .22s ease-in-out infinite alternate; }
+  @keyframes mexe-e { to { transform: rotate(-14deg); } }
+  @keyframes mexe-d { to { transform: rotate(14deg); } }
+
+  #laranja { transform-box: fill-box; transform-origin: center; cursor: pointer; }
+  #laranja.pula { animation: pula .9s cubic-bezier(.3, .7, .4, 1); }
+  @keyframes pula {
+    0% { transform: translateY(0) rotate(0); }
+    40% { transform: translateY(-62px) rotate(200deg); }
+    70% { transform: translateY(0) rotate(360deg); }
+    82% { transform: translateY(-10px) rotate(360deg); }
+    100% { transform: translateY(0) rotate(360deg); }
+  }
+
+  #patoBob { animation: boia 2.6s ease-in-out -1s infinite; }
+  #pato { transform-box: fill-box; transform-origin: 50% 80%; cursor: pointer; }
+  #pato.gira { animation: gira .7s ease; }
+  @keyframes gira {
+    30% { transform: translateY(-18px) rotate(-18deg); }
+    60% { transform: translateY(0) rotate(10deg); }
+    100% { transform: rotate(0); }
+  }
+
+  .vapor { opacity: 0; animation: vapor 4s ease-in-out infinite; }
+  .vapor:nth-child(2) { animation-delay: 1.3s; }
+  .vapor:nth-child(3) { animation-delay: 2.6s; }
+  @keyframes vapor {
+    0% { opacity: 0; transform: translateY(10px); }
+    40% { opacity: .75; }
+    100% { opacity: 0; transform: translateY(-34px); }
+  }
+  .reflexo path { animation: reflexo 3s ease-in-out infinite; }
+  .reflexo path:nth-child(2) { animation-delay: 1s; }
+  .reflexo path:nth-child(3) { animation-delay: 2s; }
+  @keyframes reflexo { 0%, 100% { opacity: .2; transform: translateX(0); } 50% { opacity: .85; transform: translateX(6px); } }
+
+  .anel { fill: none; stroke: #fff; stroke-width: 2.5; transform-box: fill-box; transform-origin: center; animation: anel 1s ease-out forwards; }
+  @keyframes anel { from { transform: scale(.2); opacity: .95; } to { transform: scale(1.7); opacity: 0; } }
+
+  /* balão de fala */
+  .balao {
+    position: absolute;
+    left: 68%;
+    top: 26%;
+    padding: 8px 16px;
+    background: #fff;
+    color: var(--rosa);
+    font-weight: 600;
+    font-size: clamp(15px, 2.2vh, 20px);
+    white-space: nowrap;
+    border-radius: 20px;
+    box-shadow: 0 6px 18px rgba(201, 48, 92, .18);
+    transform-origin: 0% 100%;
+    pointer-events: none;
+    opacity: 0;
+    z-index: 3;
+  }
+  .balao::after {
+    content: "";
+    position: absolute;
+    left: 14px;
+    bottom: -8px;
+    border: 8px solid transparent;
+    border-top-color: #fff;
+    border-bottom: 0;
+  }
+  .balao.mostra { animation: balao 1.7s both; }
+  @keyframes balao {
+    0% { opacity: 0; transform: translateY(-100%) scale(.4); }
+    12% { opacity: 1; transform: translateY(-100%) scale(1.1); }
+    22% { transform: translateY(-100%) scale(1); }
+    85% { opacity: 1; transform: translateY(-100%) scale(1); }
+    100% { opacity: 0; transform: translateY(-110%) scale(.9); }
+  }
+
+  .dica {
+    margin-top: 6px;
+    font-size: clamp(13px, 1.9vh, 16px);
+    font-weight: 500;
+    text-align: center;
+    opacity: .75;
+  }
+
+  /* ---------- corações ---------- */
+  .coracao { position: fixed; pointer-events: none; z-index: 5; transform: translate(-50%, -50%); }
+  .coracao svg { display: block; width: 100%; height: 100%; filter: drop-shadow(0 2px 3px rgba(201, 48, 92, .25)); }
+  .estoura { animation: estoura 1.2s cubic-bezier(.2, .7, .3, 1) forwards; }
+  @keyframes estoura {
+    0% { transform: translate(-50%, -50%) scale(.2); opacity: 0; }
+    15% { opacity: 1; transform: translate(calc(-50% + var(--dx) * .25), calc(-50% + var(--dy) * .25)) scale(1.15) rotate(calc(var(--rot) * .3)); }
+    100% { transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(.7) rotate(var(--rot)); opacity: 0; }
+  }
+  .sobe { z-index: 0; animation: flutua linear forwards; }
+  @keyframes flutua {
+    0% { transform: translate(-50%, 0); opacity: 0; }
+    10% { opacity: var(--op, .4); }
+    85% { opacity: var(--op, .4); }
+    100% { transform: translate(calc(-50% + var(--dx)), var(--dy)) rotate(var(--rot)); opacity: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #capyBob, #patoBob, .vapor, .reflexo path, .bate, .brilho-estrela { animation: none !important; }
+    .vapor { opacity: .5; }
+  }
+</style>
+</head>
+<body>
+
+<div id="fundo"></div>
+
+<main>
+  <!-- lettering -->
+  <svg class="letreiro" id="letreiro" viewBox="0 0 600 290" role="img" aria-label="amo você EMI">
+    <defs>
+      <path id="arco" d="M 95 172 Q 300 42 505 172"/>
+      <linearGradient id="gEmi" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#ff85a9"/>
+        <stop offset="1" stop-color="#ff3f78"/>
+      </linearGradient>
+      <filter id="sombra" x="-10%" y="-20%" width="120%" height="150%">
+        <feDropShadow dx="0" dy="10" stdDeviation="9" flood-color="#c9305c" flood-opacity=".22"/>
+      </filter>
+      <path id="coracaoP" d="M12 21.2s-7.6-4.7-10.1-9.4C.2 8.5 2 4.6 5.8 4.2c2.3-.2 4.3 1 6.2 3.1 1.9-2.1 3.9-3.3 6.2-3.1 3.8.4 5.6 4.3 3.9 7.6-2.5 4.7-10.1 9.4-10.1 9.4z"/>
+      <path id="estrela" d="M0 -11 L2.6 -2.6 L11 0 L2.6 2.6 L0 11 L-2.6 2.6 L-11 0 L-2.6 -2.6Z"/>
+    </defs>
+
+    <g fill="#ffd166">
+      <use href="#estrela" class="brilho-estrela" x="70" y="95"/>
+      <use href="#estrela" class="brilho-estrela" x="535" y="78"/>
+      <use href="#estrela" class="brilho-estrela" x="560" y="235"/>
+      <use href="#estrela" class="brilho-estrela" x="42" y="250"/>
+    </g>
+
+    <g filter="url(#sombra)">
+      <!-- amo você -->
+      <text class="script" font-size="72" fill="#b82a55" stroke="#b82a55" stroke-width="14" stroke-linejoin="round" transform="translate(0 6)">
+        <textPath href="#arco" startOffset="50%" text-anchor="middle">amo você</textPath>
+      </text>
+      <text class="script" font-size="72" fill="#e8456f" stroke="#fff" stroke-width="14" stroke-linejoin="round" paint-order="stroke">
+        <textPath href="#arco" startOffset="50%" text-anchor="middle">amo você</textPath>
+      </text>
+
+      <!-- EMI -->
+      <g id="emi">
+        <text class="emi-txt" x="300" y="276" font-size="140" text-anchor="middle" fill="#c9305c" stroke="#c9305c" stroke-width="16" stroke-linejoin="round" transform="translate(0 8)">EMI</text>
+        <text class="emi-txt" x="300" y="276" font-size="140" text-anchor="middle" fill="url(#gEmi)" stroke="#fff" stroke-width="14" stroke-linejoin="round" paint-order="stroke">EMI</text>
+      </g>
+
+      <!-- corações -->
+      <g transform="translate(108 212)">
+        <g class="bate"><use href="#coracaoP" transform="translate(-22 -22) scale(1.85)" fill="#ff5c8a" stroke="#fff" stroke-width="1.6"/></g>
+      </g>
+      <g transform="translate(492 212)">
+        <g class="bate atraso"><use href="#coracaoP" transform="translate(-22 -22) scale(1.85)" fill="#ff5c8a" stroke="#fff" stroke-width="1.6"/></g>
+      </g>
+    </g>
+  </svg>
+
+  <!-- capivara -->
+  <div class="capy-wrap">
+    <div class="balao" id="balao"></div>
+
+    <svg id="capy" viewBox="0 -30 420 410" role="img" aria-label="capivara no ofurô com uma laranja na cabeça">
+      <defs>
+        <clipPath id="corteAgua"><rect x="-100" y="-300" width="620" height="592"/></clipPath>
+        <radialGradient id="gAgua" cx=".5" cy=".3" r=".75">
+          <stop offset="0" stop-color="#bdf0f7"/>
+          <stop offset="1" stop-color="#7ccbe0"/>
+        </radialGradient>
+        <radialGradient id="gPelo" cx=".4" cy=".3" r=".8">
+          <stop offset="0" stop-color="#c8945f"/>
+          <stop offset="1" stop-color="#a86e42"/>
+        </radialGradient>
+        <radialGradient id="gLaranja" cx=".35" cy=".35" r=".75">
+          <stop offset="0" stop-color="#ffc56a"/>
+          <stop offset="1" stop-color="#ff8c1a"/>
+        </radialGradient>
+      </defs>
+
+      <!-- ofurô -->
+      <ellipse cx="210" cy="308" rx="200" ry="68" fill="none" stroke="#cdbdae" stroke-width="16" stroke-dasharray="22 18" stroke-linecap="round"/>
+      <ellipse cx="210" cy="305" rx="200" ry="68" fill="url(#gAgua)"/>
+      <ellipse cx="210" cy="305" rx="200" ry="68" fill="none" stroke="#eadfd4" stroke-width="16" stroke-dasharray="22 18" stroke-linecap="round"/>
+
+      <g class="reflexo" stroke="#fff" stroke-width="3" stroke-linecap="round" fill="none">
+        <path d="M52 322 q12 -5 24 0"/>
+        <path d="M300 348 q14 -5 28 0"/>
+        <path d="M100 350 q10 -4 20 0"/>
+      </g>
+
+      <g fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round">
+        <path class="vapor" d="M62 282 q-10 -15 0 -30 q10 -15 0 -30"/>
+        <path class="vapor" d="M362 278 q-10 -15 0 -30 q10 -15 0 -30"/>
+        <path class="vapor" d="M96 262 q-8 -12 0 -24 q8 -12 0 -24"/>
+      </g>
+
+      <!-- capivara (cortada na linha d'água) -->
+      <g clip-path="url(#corteAgua)">
+        <g id="capyBob">
+          <g id="capyBoing">
+            <!-- corpo -->
+            <ellipse cx="210" cy="306" rx="140" ry="84" fill="#a66d42"/>
+
+            <!-- patinhas -->
+            <g fill="#8f5a35">
+              <ellipse cx="158" cy="291" rx="22" ry="12"/>
+              <ellipse cx="262" cy="291" rx="22" ry="12"/>
+            </g>
+            <g stroke="#6b3e22" stroke-width="2" stroke-linecap="round">
+              <path d="M150 284 v6 M158 283 v7 M166 284 v6"/>
+              <path d="M254 284 v6 M262 283 v7 M270 284 v6"/>
+            </g>
+
+            <!-- orelhas -->
+            <g class="orelha orelha-e">
+              <ellipse cx="132" cy="102" rx="13" ry="10" fill="#7d4a2a" transform="rotate(-20 132 102)"/>
+              <ellipse cx="133" cy="104" rx="6" ry="4.5" fill="#5a331c" transform="rotate(-20 133 104)"/>
+            </g>
+            <g class="orelha orelha-d">
+              <ellipse cx="288" cy="102" rx="13" ry="10" fill="#7d4a2a" transform="rotate(20 288 102)"/>
+              <ellipse cx="287" cy="104" rx="6" ry="4.5" fill="#5a331c" transform="rotate(20 287 104)"/>
+            </g>
+
+            <!-- cabeça (quadradona, jeito de capivara) -->
+            <rect x="104" y="96" width="212" height="166" rx="64" ry="62" fill="url(#gPelo)"/>
+            <ellipse cx="160" cy="116" rx="30" ry="10" fill="#fff" opacity=".13" transform="rotate(-12 160 116)"/>
+
+            <!-- focinho grandão -->
+            <rect x="138" y="156" width="144" height="98" rx="48" ry="46" fill="#9a6440"/>
+            <ellipse cx="210" cy="182" rx="36" ry="15" fill="#7a4829"/>
+            <path d="M189 184 q5 -9 14 -4 M231 184 q-5 -9 -14 -4" fill="none" stroke="#2e190d" stroke-width="5" stroke-linecap="round"/>
+            <path d="M210 192 V210" stroke="#3f2415" stroke-width="3" stroke-linecap="round"/>
+            <path class="boca" d="M198 210 Q204 218 210 210 Q216 218 222 210" fill="none" stroke="#3f2415" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <g class="boca-aberta">
+              <path d="M198 209 Q210 232 222 209 Z" fill="#3f2415" stroke="#3f2415" stroke-width="3" stroke-linejoin="round"/>
+              <path d="M203 219 Q210 229 217 219 Q210 215 203 219Z" fill="#ff7b9c"/>
+            </g>
+
+            <!-- bochechas -->
+            <ellipse class="bochecha" cx="126" cy="170" rx="14" ry="9" fill="#ff8fab"/>
+            <ellipse class="bochecha" cx="294" cy="170" rx="14" ry="9" fill="#ff8fab"/>
+
+            <!-- olhos -->
+            <g class="olho">
+              <g class="pupila" data-cx="156" data-cy="136">
+                <ellipse cx="156" cy="136" rx="8.5" ry="9.5" fill="#2a170c"/>
+                <circle cx="159" cy="132" r="3.1" fill="#fff"/>
+                <circle cx="153.5" cy="139.5" r="1.4" fill="#fff" opacity=".8"/>
+              </g>
+            </g>
+            <g class="olho">
+              <g class="pupila" data-cx="264" data-cy="136">
+                <ellipse cx="264" cy="136" rx="8.5" ry="9.5" fill="#2a170c"/>
+                <circle cx="267" cy="132" r="3.1" fill="#fff"/>
+                <circle cx="261.5" cy="139.5" r="1.4" fill="#fff" opacity=".8"/>
+              </g>
+            </g>
+            <path class="olho-feliz" d="M146 140 Q156 127 166 140 M254 140 Q264 127 274 140" fill="none" stroke="#2a170c" stroke-width="4.5" stroke-linecap="round"/>
+
+            <!-- laranjinha -->
+            <g id="laranja">
+              <circle cx="210" cy="74" r="24" fill="url(#gLaranja)"/>
+              <g fill="#e2730e" opacity=".45">
+                <circle cx="218" cy="80" r="1.4"/><circle cx="204" cy="86" r="1.4"/>
+                <circle cx="225" cy="69" r="1.4"/><circle cx="196" cy="76" r="1.4"/>
+              </g>
+              <ellipse cx="201" cy="65" rx="7" ry="5" fill="#fff" opacity=".4" transform="rotate(-30 201 65)"/>
+              <path d="M210 51 v-6" stroke="#6b4a2b" stroke-width="3" stroke-linecap="round"/>
+              <path d="M211 47 q12 -12 25 -4 q-10 12 -25 4z" fill="#58b368"/>
+            </g>
+          </g>
+        </g>
+      </g>
+
+      <!-- linha d'água na frente do corpo -->
+      <path d="M66 293 A145 11 0 0 0 354 293" fill="none" stroke="#fff" stroke-width="3" opacity=".6"/>
+
+      <!-- patinho -->
+      <g transform="translate(362 322)">
+        <g id="patoBob">
+          <g id="pato">
+            <path d="M18 -2 l14 -12 l-3 16z" fill="#ffd43b"/>
+            <ellipse cx="0" cy="0" rx="25" ry="14" fill="#ffd43b"/>
+            <ellipse cx="5" cy="-1" rx="11" ry="7" fill="#f4bb1d"/>
+            <circle cx="-12" cy="-16" r="12" fill="#ffd43b"/>
+            <ellipse cx="-25" cy="-13" rx="8" ry="4.5" fill="#ff8a1f"/>
+            <circle cx="-15" cy="-19" r="2.4" fill="#2a170c"/>
+            <circle cx="-9" cy="-12" r="3" fill="#ff9fb5" opacity=".7"/>
+            <rect x="-30" y="-12" width="60" height="30" fill="transparent"/>
+          </g>
+          <path d="M-29 8 A29 6 0 0 0 29 8" fill="none" stroke="#fff" stroke-width="2.5" opacity=".7"/>
+        </g>
+      </g>
+
+      <g id="aneis"></g>
+    </svg>
+  </div>
+
+  <p class="dica" id="dica"></p>
+</main>
+
+<script>
+  // Frases do balão (troque à vontade)
+  const FRASES = ['te amo!', 'hihi', 'mais carinho!', 'EMI ♥', 'de novo!'];
+
+  const svg = document.getElementById('capy');
+  const capy = document.getElementById('capyBoing');
+  const laranja = document.getElementById('laranja');
+  const pato = document.getElementById('pato');
+  const emi = document.getElementById('emi');
+  const balao = document.getElementById('balao');
+  const aneis = document.getElementById('aneis');
+  const fundo = document.getElementById('fundo');
+  const pupilas = [...svg.querySelectorAll('.pupila')];
+  const olhos = [...svg.querySelectorAll('.olho')];
+
+  const toque = matchMedia('(hover: none)').matches;
+  document.getElementById('dica').textContent = toque
+    ? 'arrasta o dedo na cabecinha dela ✦ toca nela ✦ e no patinho'
+    : 'faz carinho na cabecinha dela ✦ clica nela ✦ e no patinho';
+
+  const HEART = '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 21.2s-7.6-4.7-10.1-9.4C.2 8.5 2 4.6 5.8 4.2c2.3-.2 4.3 1 6.2 3.1 1.9-2.1 3.9-3.3 6.2-3.1 3.8.4 5.6 4.3 3.9 7.6-2.5 4.7-10.1 9.4-10.1 9.4z"/></svg>';
+  const CORES = ['#ff5c8a', '#ff86a8', '#ff3d6e', '#ffb3c7', '#ff9a8b'];
+  const rnd = (a, b) => a + Math.random() * (b - a);
+  const pick = a => a[Math.floor(Math.random() * a.length)];
+
+  function coracao(x, y, o = {}) {
+    const el = document.createElement('div');
+    const tam = o.tam || rnd(16, 30);
+    el.className = 'coracao ' + (o.tipo || 'estoura');
+    el.style.left = x + 'px';
+    el.style.top = y + 'px';
+    el.style.width = el.style.height = tam + 'px';
+    el.style.color = o.cor || pick(CORES);
+    el.style.setProperty('--dx', (o.dx ?? rnd(-90, 90)) + 'px');
+    el.style.setProperty('--dy', (o.dy ?? rnd(-180, -80)) + 'px');
+    el.style.setProperty('--rot', rnd(-40, 40) + 'deg');
+    if (o.op) el.style.setProperty('--op', o.op);
+    el.style.animationDuration = (o.dur || rnd(900, 1500)) + 'ms';
+    el.innerHTML = HEART;
+    (o.alvo || document.body).appendChild(el);
+    el.addEventListener('animationend', () => el.remove());
+  }
+
+  function reiniciar(el, classe) {
+    el.classList.remove(classe);
+    void el.getBoundingClientRect();
+    el.classList.add(classe);
+  }
+
+  // ---------- som (bem baixinho) ----------
+  let ac;
+  function som(f = 520, vol = .1, tipo = 'sine', dur = .25, fim = 1.8) {
+    try {
+      ac = ac || new (window.AudioContext || window.webkitAudioContext)();
+      const t = ac.currentTime, o = ac.createOscillator(), g = ac.createGain();
+      o.type = tipo;
+      o.frequency.setValueAtTime(f, t);
+      o.frequency.exponentialRampToValueAtTime(f * fim, t + dur * .5);
+      g.gain.setValueAtTime(.0001, t);
+      g.gain.exponentialRampToValueAtTime(vol, t + .015);
+      g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+      o.connect(g).connect(ac.destination);
+      o.start(t);
+      o.stop(t + dur + .02);
+    } catch (_) {}
+  }
+
+  // ---------- olhos seguem o mouse ----------
+  function noSvg(e) {
+    const m = svg.getScreenCTM();
+    return m ? new DOMPoint(e.clientX, e.clientY).matrixTransform(m.inverse()) : null;
+  }
+  function olhar(p) {
+    pupilas.forEach(g => {
+      const dx = p.x - g.dataset.cx, dy = p.y - g.dataset.cy;
+      const d = Math.hypot(dx, dy) || 1, m = Math.min(4.5, d / 25);
+      g.setAttribute('transform', `translate(${(dx / d * m).toFixed(2)} ${(dy / d * m).toFixed(2)})`);
+    });
+  }
+
+  // ---------- piscar ----------
+  olhos.forEach(o => o.addEventListener('animationend', () => o.classList.remove('pisca')));
+  (function piscar() {
+    if (!capy.classList.contains('feliz')) olhos.forEach(o => reiniciar(o, 'pisca'));
+    setTimeout(piscar, rnd(2200, 5000));
+  })();
+
+  // ---------- carinha feliz ----------
+  let timerFeliz;
+  function feliz(ms) {
+    capy.classList.add('feliz');
+    clearTimeout(timerFeliz);
+    timerFeliz = setTimeout(() => capy.classList.remove('feliz'), ms);
+  }
+
+  // ---------- carinho na cabeça ----------
+  let carinho = 0, ultimo = null, ultimoCoracao = 0, timerCarinho;
+  window.addEventListener('pointermove', e => {
+    const p = noSvg(e);
+    if (!p) return;
+    olhar(p);
+    const naCabeca = ((p.x - 210) / 112) ** 2 + ((p.y - 176) / 96) ** 2 <= 1;
+    const encostando = e.pointerType === 'mouse' || e.buttons > 0;
+    if (naCabeca && encostando) {
+      if (ultimo) carinho += Math.hypot(p.x - ultimo.x, p.y - ultimo.y);
+      ultimo = p;
+      if (carinho > 70) {
+        feliz(700);
+        const agora = performance.now();
+        if (agora - ultimoCoracao > 200) {
+          ultimoCoracao = agora;
+          coracao(e.clientX, e.clientY, { tam: rnd(12, 20), dx: rnd(-30, 30), dy: rnd(-90, -50), dur: 900 });
+        }
+      }
+      clearTimeout(timerCarinho);
+      timerCarinho = setTimeout(() => { carinho = 0; ultimo = null; }, 600);
+    } else {
+      ultimo = null;
+    }
+  });
+
+  // ---------- cliques ----------
+  let ultimaFrase = '';
+  function falar(txt) {
+    balao.textContent = txt;
+    reiniciar(balao, 'mostra');
+  }
+  function anel(x, y, rx = 40) {
+    const el = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+    el.setAttribute('cx', x);
+    el.setAttribute('cy', y);
+    el.setAttribute('rx', rx);
+    el.setAttribute('ry', rx * .22);
+    el.setAttribute('class', 'anel');
+    aneis.appendChild(el);
+    el.addEventListener('animationend', () => el.remove());
+  }
+
+  capy.addEventListener('animationend', e => { if (e.target === capy) capy.classList.remove('boing'); });
+
+  function boop(e) {
+    reiniciar(capy, 'boing');
+    feliz(1000);
+    for (let i = 0; i < 12; i++) coracao(e.clientX, e.clientY, { dx: rnd(-150, 150), dy: rnd(-230, -60) });
+    anel(rnd(70, 110), 318);
+    anel(rnd(300, 330), 320);
+    let frase;
+    do { frase = pick(FRASES); } while (frase === ultimaFrase);
+    ultimaFrase = frase;
+    falar(frase);
+    som(520);
+  }
+  function pulaLaranja(e) {
+    reiniciar(laranja, 'pula');
+    feliz(900);
+    falar('ops!');
+    for (let i = 0; i < 5; i++) coracao(e.clientX, e.clientY, { cor: '#ff9a3d', tam: rnd(12, 20) });
+    som(700, .1, 'sine', .3, 1.5);
+  }
+  function quack(e) {
+    reiniciar(pato, 'gira');
+    for (let i = 0; i < 5; i++) coracao(e.clientX, e.clientY, { cor: '#ffc93b', tam: rnd(12, 20) });
+    som(620, .05, 'square', .12, .6);
+    setTimeout(() => som(560, .05, 'square', .14, .6), 140);
+  }
+
+  let desceu = null;
+  svg.addEventListener('pointerdown', e => { desceu = { x: e.clientX, y: e.clientY }; });
+  svg.addEventListener('click', e => {
+    e.stopPropagation();
+    if (desceu && Math.hypot(e.clientX - desceu.x, e.clientY - desceu.y) > 12) return;
+    if (e.target.closest('#laranja')) return pulaLaranja(e);
+    if (e.target.closest('#pato')) return quack(e);
+    if (e.target.closest('#capyBoing')) return boop(e);
+    const p = noSvg(e);
+    if (p) anel(p.x, p.y, 30);
+    for (let i = 0; i < 4; i++) coracao(e.clientX, e.clientY, { tam: rnd(12, 20) });
+    som(880, .06);
+  });
+
+  document.getElementById('letreiro').addEventListener('click', () => reiniciar(emi, 'balanca'));
+  emi.addEventListener('animationend', () => emi.classList.remove('balanca'));
+
+  document.addEventListener('click', e => {
+    for (let i = 0; i < 6; i++) coracao(e.clientX, e.clientY, { tam: rnd(12, 24) });
+    som(rnd(640, 900), .07);
+  });
+
+  // ---------- corações subindo no fundo ----------
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    setInterval(() => {
+      if (document.hidden) return;
+      coracao(rnd(0, innerWidth), innerHeight + 30, {
+        tipo: 'sobe', alvo: fundo, tam: rnd(10, 28),
+        dx: rnd(-60, 60), dy: -(innerHeight + 90),
+        dur: rnd(7000, 12000), op: rnd(.25, .55).toFixed(2)
+      });
+    }, 650);
+  }
+
+  // oi inicial
+  setTimeout(() => falar('oi, EMI!'), 1500);
+</script>
+</body>
+</html>
